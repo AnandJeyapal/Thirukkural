@@ -1,0 +1,10 @@
+<resources>
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">-->
+        <!--&lt;!&ndash; enable window content transitions &ndash;&gt;-->
+        <!--<item name="android:windowActivityTransitions">true</item>-->
+        <!--<item name="android:colorPrimary">@color/ColorPrimary</item>-->
+        <!--<item name="android:colorPrimaryDark">@color/ColorPrimaryDark</item>-->
+        <!--<item name="android:colorAccent">@color/green_primary</item>-->
+    <!--</style>-->
+</resources>
