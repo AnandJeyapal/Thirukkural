@@ -72,7 +72,7 @@ public class MoreContentActivity extends AppCompatActivity implements AppBarLayo
             moreTitleOne.setText(getResources().getString(R.string.thirukkural_more_title_one));
             moreTitleTwo.setText(getResources().getString(R.string.thirukkural_more_title_two));
             moreTitleThree.setVisibility(View.GONE);
-            moreContentTwo.setVisibility(View.GONE);
+            moreContentThree.setVisibility(View.GONE);
         }
     }
 

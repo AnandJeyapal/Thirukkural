@@ -47,6 +47,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton readKurals;
     private View moreSalamon;
     private View moreThirukkural;
+    private View shareSalamon;
+    private View shareThirukkural;
 
 
     @Override
@@ -59,8 +61,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         TITLES = getResources().getStringArray(R.array.home_menus);
         moreSalamon = findViewById(R.id.more_about_salamon);
         moreThirukkural = findViewById(R.id.more_about_thirukkural);
+        shareSalamon = findViewById(R.id.share_about_salamon);
+        shareThirukkural = findViewById(R.id.share_about_thirukkural);
         moreSalamon.setOnClickListener(this);
         moreThirukkural.setOnClickListener(this);
+        shareSalamon.setOnClickListener(this);
+        shareThirukkural.setOnClickListener(this);
         model = Model.getInstance();
         loadDB();
         readKurals = (FloatingActionButton) findViewById(R.id.done_button);
@@ -189,17 +195,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 moreContentIntent.putExtra(Constants.EXTRA_TITLE_KEY, Constants.EXTRA_MORE_THIRUKKURAL_POINTS);
                 options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(this, findViewById(R.id.sp_image), "thirukkural");
+                startActivity(moreContentIntent, options.toBundle());
                 break;
             case R.id.more_about_thirukkural:
                 moreContentIntent.putExtra(Constants.EXTRA_TITLE_KEY, Constants.EXTRA_MORE_THIRUKKURAL);
                 options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(this, findViewById(R.id.thirukkural_image), "thirukkural");
+                startActivity(moreContentIntent, options.toBundle());
                 break;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            startActivity(moreContentIntent, options.toBundle());
-        } else {
-            startActivity(moreContentIntent);
+            case R.id.share_about_salamon:
+                Utils.shareContent(getApplicationContext(), Constants.EXTRA_MORE_THIRUKKURAL_POINTS);
+                break;
+            case R.id.share_about_thirukkural:
+                Utils.shareContent(getApplicationContext(), Constants.EXTRA_MORE_THIRUKKURAL);
+                break;
+
         }
     }
 }

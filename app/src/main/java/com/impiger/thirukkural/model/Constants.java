@@ -29,4 +29,5 @@ public class Constants {
     public static final String EXTRA_MORE_THIRUKKURAL = "திருக்குறள்";
 
     public static final String ALARM_SET = "alarm_set";
+    public static final String EXTRA_CLEAR_NOTIFICATIONS = "clear_notifications";
 }

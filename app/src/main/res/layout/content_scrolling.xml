@@ -15,41 +15,46 @@
         android:orientation="vertical"
         android:background="@android:color/white"
         android:paddingTop="12dp">
-        <TextView
+        <com.impiger.thirukkural.view.CustomTextView
             android:id="@+id/title_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text"
+            android:includeFontPadding="false"
             android:textSize="16sp"/>
-        <TextView
+        <com.impiger.thirukkural.view.CustomTextView
             android:id="@+id/content_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_text"
             android:paddingTop="8dp"
+            android:includeFontPadding="false"
             android:paddingBottom="12dp"
             android:textSize="14sp"/>
-        <TextView
+        <com.impiger.thirukkural.view.CustomTextView
             android:id="@+id/title_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text"
+            android:includeFontPadding="false"
             android:textSize="16sp"/>
-        <TextView
+        <com.impiger.thirukkural.view.CustomTextView
             android:id="@+id/content_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_text"
             android:paddingTop="8dp"
             android:paddingBottom="12dp"
+            android:includeFontPadding="false"
             android:textSize="14sp"/>
-        <TextView
+        <com.impiger.thirukkural.view.CustomTextView
             android:id="@+id/title_three"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
             android:textColor="@color/primary_text"
             android:textSize="16sp"/>
-        <TextView
+        <com.impiger.thirukkural.view.CustomTextView
             android:id="@+id/content_three"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,6 +62,7 @@
             android:paddingTop="8dp"
             android:autoLink="web"
             android:paddingBottom="12dp"
+            android:includeFontPadding="false"
             android:textSize="14sp"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

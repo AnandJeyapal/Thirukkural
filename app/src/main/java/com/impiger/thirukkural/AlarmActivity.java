@@ -164,7 +164,6 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void setAlarm(int hourOfDay, int minutes) {
-        Utils.showNotification(this);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent notificationIntent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

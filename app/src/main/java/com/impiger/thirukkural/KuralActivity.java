@@ -59,16 +59,15 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
     private ThirukkuralPageAdapter adapter;
     private Model model;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    private void init() {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         contentsPager = (ViewPager) findViewById(R.id.contents_pager);
         listView = (ListView) findViewById(R.id.RecyclerView);
         kuralStartId = getIntent().getIntExtra(Constants.EXTRA_START_ID, 0);
+        if(getIntent().getBooleanExtra(Constants.EXTRA_CLEAR_NOTIFICATIONS, false)) {
+            Utils.clearNotifications(this);
+        }
         mAdapter = new DrawerAdapter(this, TITLES, ICONS);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,47 +115,14 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
         kurals = myDbHelper.getAllKurals();
         adapter = new ThirukkuralPageAdapter(this, kurals);
         contentsPager.setAdapter(adapter);
-        /* Retrieve a PendingIntent that will perform a broadcast */
-        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         contentsPager.setCurrentItem(kuralStartId);
         dialog = new ShareKuralDialog("ShareKural", this);
     }
-
-    public void startAt10() {
-//        Intent myIntent = new Intent(KuralActivity.this , AlarmReceiver.class);
-//        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-//        pendingIntent = PendingIntent.getService(KuralActivity.this, 0, myIntent, 0);
-//        alarmManager.cancel(pendingIntent);
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.HOUR_OF_DAY, 18);
-//        calendar.set(Calendar.MINUTE, 28);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
-//        scheduleNotification(5000);
-//        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 18);
-//        calendar.set(Calendar.MINUTE, 18);
-//        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-    }
-
-    private void scheduleNotification(int delay) {
-
-        Intent notificationIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
-    }
-
-    private Notification getNotification(String content) {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Scheduled Notification");
-        builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.ic_events);
-        return builder.build();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        init();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
