@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/large_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="க"
+        android:textColor="#ffffff"
+        android:textSize="80sp"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="கடவுள் வாழ்த்து"
+        android:textColor="#ffffff"/>
+</LinearLayout>

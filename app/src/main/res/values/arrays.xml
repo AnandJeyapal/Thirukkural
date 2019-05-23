@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="primary_colors">
+        <item>@color/blue_primary</item>
+        <item>@color/purple_primary</item>
+        <item>@color/light_blue_primary</item>
+        <item>@color/cyan_primary</item>
+        <item>@color/teal_primary</item>
+        <item>@color/green_primary</item>
+        <item>@color/light_green_primary</item>
+        <item>@color/orange_primary</item>
+        <item>@color/pink_primary</item>
+    </array>
+    <array name="primary_dark_colors">
+        <item>@color/blue_primary_dark</item>
+        <item>@color/purple_primary_dark</item>
+        <item>@color/light_blue_primary_dark</item>
+        <item>@color/cyan_primary_dark</item>
+        <item>@color/teal_primary_dark</item>
+        <item>@color/green_primary_dark</item>
+        <item>@color/light_green_primary_dark</item>
+        <item>@color/orange_primary_dark</item>
+        <item>@color/pink_primary_dark</item>
+    </array>
+    <string-array name="toppings">
+        <item>@string/first_explanation</item>
+        <item>@string/second_explanation</item>
+        <item>@string/third_explanation</item>
+    </string-array>
+    <string-array name="kural_info">
+        <item>@string/kural_info</item>
+        <item>@string/kural_info_one</item>
+        <item>@string/kural_info_two</item>
+        <item>@string/kural_info_three</item>
+        <item>@string/kural_info_four</item>
+    </string-array>
+
+    <string-array name="home_menus">
+        <item>@string/menu_1</item>
+        <item>@string/menu_2</item>
+        <item>@string/menu_3</item>
+        <item>@string/menu_4</item>
+        <item>@string/menu_5</item>
+    </string-array>
+</resources>

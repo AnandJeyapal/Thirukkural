@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ColorPrimary">#3f51b5</color>
+    <color name="ColorPrimaryDark">#303F9F</color>
+
+
+    <color name="ColorBackground">#e8eaf6</color>
+    <color name="blue_primary">#2196f3</color>
+    <color name="blue_primary_dark">#1976d2</color>
+    <color name="purple_primary">#673ab7</color>
+    <color name="purple_primary_dark">#512da8</color>
+    <color name="light_blue_primary">#03a9f4</color>
+    <color name="light_blue_primary_dark">#0288d1</color>
+    <color name="cyan_primary">#00bcd4</color>
+    <color name="cyan_primary_dark">#0097a7</color>
+    <color name="teal_primary">#009688</color>
+    <color name="teal_primary_dark">#00796b</color>
+    <color name="green_primary">#4caf50</color>
+    <color name="green_primary_dark">#388e3c</color>
+    <color name="light_green_primary">#8bc34a</color>
+    <color name="light_green_primary_dark">#689f38</color>
+    <color name="orange_primary">#ff9800</color>
+    <color name="orange_primary_dark">#f57c00</color>
+    <color name="pink_primary">#e91e63</color>
+    <color name="pink_primary_dark">#c2185b</color>
+    <color name="alarm_layout_color">#283593</color>
+
+    <color name="secondary_text">#727272</color>
+    <color name="primary_text">#212121</color>
+    <color name="ColorText">#303F9F</color>
+
+</resources>
