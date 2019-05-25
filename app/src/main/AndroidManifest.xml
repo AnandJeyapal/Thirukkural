@@ -48,6 +48,11 @@
             android:screenOrientation="portrait"
             android:label="விருப்பமானவை "/>
         <activity
+            android:name=".FavoriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FavoriteTheme"
+            android:label="விருப்பமானவை "/>
+        <activity
             android:name=".AlarmActivity"
             android:label="விருப்பமானவை "
             android:screenOrientation="portrait"

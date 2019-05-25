@@ -84,7 +84,6 @@ public class FavoriteGridActivity extends AppCompatActivity implements Favourite
         super.onResume();
         updateAdapter();
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

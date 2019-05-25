@@ -3,10 +3,12 @@ package com.impiger.thirukkural;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,9 +24,11 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.impiger.thirukkural.adapter.DrawerAdapter;
 import com.impiger.thirukkural.adapter.ThirukkuralPageAdapter;
@@ -39,9 +43,9 @@ import com.impiger.thirukkural.model.Thirukkural;
 import java.util.ArrayList;
 
 
-public class KuralActivity extends AppCompatActivity implements ShareKuralDialogListener{
+public class KuralActivity extends AppCompatActivity implements ShareKuralDialogListener {
 
-    String TITLES[] = {"முதற்பக்கம்", "அதிகாரங்கள் ", "விருப்பமானவை", "தினம் ஒரு குறள்","விவரம்"};
+    String TITLES[] = {"முதற்பக்கம்", "அதிகாரங்கள் ", "விருப்பமானவை", "தினம் ஒரு குறள்", "விவரம்"};
     int ICONS[] = {R.drawable.ic_home_white, R.drawable.ic_events_white, R.drawable.ic_star,
             R.drawable.ic_alarm, R.drawable.ic_help_white};
     private Toolbar toolbar;
@@ -54,18 +58,20 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
     private DBHelper myDbHelper;
     private ArrayList<Thirukkural> kurals;
     private int kuralStartId;
-    private PendingIntent pendingIntent;
+    private FloatingActionButton favoriteButton;
     private ShareKuralDialog dialog;
     private ThirukkuralPageAdapter adapter;
     private Model model;
+    private boolean isFavorite;
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         contentsPager = (ViewPager) findViewById(R.id.contents_pager);
         listView = (ListView) findViewById(R.id.RecyclerView);
+        favoriteButton = (FloatingActionButton) findViewById(R.id.favourite_button);
         kuralStartId = getIntent().getIntExtra(Constants.EXTRA_START_ID, 0);
-        if(getIntent().getBooleanExtra(Constants.EXTRA_CLEAR_NOTIFICATIONS, false)) {
+        if (getIntent().getBooleanExtra(Constants.EXTRA_CLEAR_NOTIFICATIONS, false)) {
             Utils.clearNotifications(this);
         }
         mAdapter = new DrawerAdapter(this, TITLES, ICONS);
@@ -84,7 +90,7 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
                         startActivity(intent);
                         break;
                     case 3:
-                        intent = new Intent(getApplicationContext(), FavoriteGridActivity.class);
+                        intent = new Intent(getApplicationContext(), FavoriteActivity.class);
                         startActivity(intent);
                         break;
                     case 4:
@@ -94,6 +100,28 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
                     case 5:
                         showAboutDialog();
                 }
+            }
+        });
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                favoriteButton.startAnimation(
+                        AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_button));
+                isFavorite = !isFavorite;
+                ContentValues values = new ContentValues();
+                int kuralId = contentsPager.getCurrentItem();
+                values.put("Number", kuralId /*0 based item index*/);
+                String toastText = getResources().getString(isFavorite ? R.string.favorite_kural_add : R
+                        .string.favorite_kural_remove);
+                if (isFavorite) {
+                    myDbHelper.insertKuralFavoriteRecord(values);
+                    Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+                } else {
+                    myDbHelper.deleteKuralFavorite("" + kuralId);
+                    Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+                }
+                updateFavorite();
             }
         });
         mLayoutManager = new LinearLayoutManager(this);
@@ -116,14 +144,35 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
         adapter = new ThirukkuralPageAdapter(this, kurals);
         contentsPager.setAdapter(adapter);
         contentsPager.setCurrentItem(kuralStartId);
+        isFavorite = myDbHelper.isKuralFavorite("" + kuralStartId);
+        updateFavorite();
+        contentsPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int kuralId) {
+                isFavorite = myDbHelper.isKuralFavorite("" + kuralId);
+                updateFavorite();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         dialog = new ShareKuralDialog("ShareKural", this);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -169,7 +218,7 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
         intent.setType("text/plain");
         Thirukkural kural = kurals.get(contentsPager.getCurrentItem());
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-        intent.putExtra(Intent.EXTRA_TEXT, kural +"\n\n" + kural.getExplanations(explanations));
+        intent.putExtra(Intent.EXTRA_TEXT, kural + "\n\n" + kural.getExplanations(explanations));
         startActivity(intent);
     }
 
@@ -255,15 +304,19 @@ public class KuralActivity extends AppCompatActivity implements ShareKuralDialog
 
     @Override
     public void handlePositiveAction(String id, ArrayList<Integer> explanations) {
-            shareKural(explanations);
+        shareKural(explanations);
     }
 
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(Gravity.LEFT)) {
+        if (drawer.isDrawerOpen(Gravity.LEFT)) {
             drawer.closeDrawer(Gravity.LEFT);
             return;
         }
         super.onBackPressed();
+    }
+
+    private void updateFavorite() {
+        favoriteButton.setImageResource(isFavorite ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
     }
 }

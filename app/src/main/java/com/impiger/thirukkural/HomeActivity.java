@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
                         break;
                     case 3:
-                        intent = new Intent(getApplicationContext(), FavoriteGridActivity.class);
+                        intent = new Intent(getApplicationContext(), FavoriteActivity.class);
                         startActivity(intent);
                         break;
                     case 4:

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_adhigarams"
+        android:icon="@drawable/ic_favorite_adhigarams"
+        android:title="@string/adhigaram" />
+
+    <item
+        android:id="@+id/navigation_kurals"
+        android:icon="@drawable/ic_favorite_kurals"
+        android:title="@string/kurals" />
+
+</menu>

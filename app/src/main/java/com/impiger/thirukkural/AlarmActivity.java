@@ -26,6 +26,7 @@ import com.impiger.thirukkural.view.ShakingBell;
 
 import java.util.Calendar;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class AlarmActivity extends AppCompatActivity implements View.OnClickListener, AlarmTimeSetListener {
 
@@ -173,8 +174,6 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minutes);
-        Toast.makeText(getApplicationContext(), "Alarm set at " + getHour() + ": " + getMinutes(),
-                Toast.LENGTH_SHORT).show();
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 

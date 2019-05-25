@@ -1,6 +1,7 @@
 package com.impiger.thirukkural.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.impiger.thirukkural.R;
+import com.impiger.thirukkural.listeners.FavouriteClickListener;
 import com.impiger.thirukkural.model.Thirukkural;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class AdhigaramDetailAdapter extends RecyclerView.Adapter<AdhigaramDetail
 
     private final Context mContext;
     private List<Thirukkural> mData;
+    private FavouriteClickListener favouriteClickListener;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         public final TextView title;
@@ -30,9 +33,10 @@ public class AdhigaramDetailAdapter extends RecyclerView.Adapter<AdhigaramDetail
         }
     }
 
-    public AdhigaramDetailAdapter(Context context, List<Thirukkural> data) {
+    public AdhigaramDetailAdapter(Context context, List<Thirukkural> data, @Nullable FavouriteClickListener listener) {
         mContext = context;
         mData = data;
+        this.favouriteClickListener = listener;
     }
 
     @Override
@@ -47,7 +51,9 @@ public class AdhigaramDetailAdapter extends RecyclerView.Adapter<AdhigaramDetail
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Position =" + position, Toast.LENGTH_SHORT).show();
+               if(favouriteClickListener != null) {
+                   favouriteClickListener.onFavoriteClick(position);
+               }
             }
         });
     }

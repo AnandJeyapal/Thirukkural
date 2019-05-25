@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.impiger.thirukkural.model.Adhigaram;
 import com.impiger.thirukkural.model.Favorite;
+import com.impiger.thirukkural.model.KuralFavorite;
 import com.impiger.thirukkural.model.Thirukkural;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TABLE_KURALS = "kurals";
     private static final String TABLE_ADHIGARAMS = "Adhigarams";
     private static final String TABLE_FAVORITES = "Favorites";
+    private static final String TABLE_KURAL_FAVORITES = "Kural_Favorites";
     private static final String PART_NAME = "PartName";
     private static final String ADHIGARAM_NUMBER = "Number";
 
@@ -333,5 +335,42 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("getAllFavorites()", favorites.toString());
 
         return favorites;
+    }
+
+    public void insertKuralFavoriteRecord(ContentValues values) {
+        myDataBase.insert(TABLE_KURAL_FAVORITES, null, values);
+    }
+
+    public boolean isKuralFavorite(String adhigaramIdx) {
+        String query = "select 1 from Kural_Favorites where Number = " + adhigaramIdx;
+        Cursor cursor = myDataBase.rawQuery(query, null);
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+    public boolean deleteKuralFavorite(String adhigaramIdx) {
+        return myDataBase.delete(TABLE_KURAL_FAVORITES,  " Number =" + adhigaramIdx, null) > 0;
+    }
+
+    public ArrayList<Thirukkural> getAllKuralFavorites() {
+        ArrayList<Thirukkural> thirukkurals = new ArrayList<Thirukkural>();
+        String query = "SELECT  kurals.id, kurals.kural, kurals.first_exp, kurals.second_exp, kurals.third_exp FROM " + TABLE_KURALS + "," + TABLE_KURAL_FAVORITES + " " + " WHERE kurals.id = " + "Kural_Favorites.Number+1";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Thirukkural thirukkural = null;
+        if (cursor.moveToFirst()) {
+            do {
+                thirukkural = new Thirukkural();
+                thirukkural.setId(Integer.parseInt(cursor.getString(0)));
+                thirukkural.setKural(cursor.getString(1));
+                thirukkural.setFirstExplanation(cursor.getString(2));
+                thirukkural.setSecondExplanation(cursor.getString(3));
+                thirukkural.setThirdExplanation(cursor.getString(4));
+
+                thirukkurals.add(thirukkural);
+            } while (cursor.moveToNext());
+        }
+        return thirukkurals;
     }
 }

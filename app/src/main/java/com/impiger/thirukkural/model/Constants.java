@@ -30,4 +30,6 @@ public class Constants {
 
     public static final String ALARM_SET = "alarm_set";
     public static final String EXTRA_CLEAR_NOTIFICATIONS = "clear_notifications";
+    public static final int KURALS_FRAGMENT = 78;
+    public static final int ADHIGARAMS_FRAGMENT = 79;
 }

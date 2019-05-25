@@ -27,6 +27,8 @@
     </string>
     <string name="see_more">மேலும்</string>
     <string name="thirukkural_second">திருக்குறளின் பெருமைகள் </string>
+    <string name="favorite_kural_add">பிடித்த குறள் சேர்க்கப்பட்டது</string>
+    <string name="favorite_kural_remove">பிடித்த குறள் நீக்கப்பட்டது</string>
     <string name="favorite_add">பிடித்த அதிகாரம் சேர்க்கப்பட்டது</string>
     <string name="favorite_remove">பிடித்த அதிகாரம் நீக்கப்பட்டது</string>
     <string name="kural_info">"இறைவன் மனிதனுக்குச் சொன்னது கீதை\n"
@@ -64,5 +66,7 @@
     <string name="menu_3">விருப்பமானவை</string>
     <string name="menu_4">தினம் ஒரு குறள்</string>
     <string name="menu_5">விவரம்</string>
+    <string name="kurals">குறள்கள்</string>
+    <string name="adhigaram">அதிகாரங்கள்</string>
 
 </resources>

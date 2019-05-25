@@ -108,7 +108,7 @@ public class AdhigaramDetailActivity extends AppCompatActivity {
         updateFavorite();
         kurals = myDbHelper.getKurals(kuralStartNumber, kuralEndNumber);
 
-        AdhigaramDetailAdapter adapter = new AdhigaramDetailAdapter(this, kurals);
+        AdhigaramDetailAdapter adapter = new AdhigaramDetailAdapter(this, kurals, null);
         mRecyclerView.setAdapter(adapter);
     }
 
