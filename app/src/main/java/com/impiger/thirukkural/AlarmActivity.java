@@ -130,11 +130,6 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt(Constants.SAVED_HOUR, hourOfDay);
-            editor.putInt(Constants.SAVED_MINUTES, minute);
-            editor.commit();
             listener.onTimeSet(hourOfDay, minute);
         }
     }
@@ -148,15 +143,16 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         setTime(hourOfDay, minutes, false);
     }
 
-    private void setTime(int hourOfDay, int minute, boolean alarm) {
+    private void setTime(final int hourOfDay, int minute, boolean alarm) {
         if (hourOfDay != 0 && minute != 0) {
-            if (hourOfDay > 12) {
-                hourOfDay = hourOfDay - 12;
+            int twelveHourOfDay = hourOfDay;
+            if (twelveHourOfDay > 12) {
+                twelveHourOfDay = hourOfDay - 12;
                 minuteView.setText("PM");
             } else {
                 minuteView.setText("AM");
             }
-            hourView.setText(Utils.getTimeString(hourOfDay, minute));
+            hourView.setText(Utils.getTimeString(twelveHourOfDay, minute));
             if (alarm) {
                 setAlarm(hourOfDay, minute);
                 setAlarmSwitch.setChecked(true);
@@ -175,19 +171,30 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minutes);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        storeTime(hourOfDay, minutes);
     }
 
     private int getHour() {
         String[] s = hourView.getText().toString().split(":");
         int hour = Integer.valueOf(s[0]);
-        if (hour > 12) {
-            hour -= 12;
-        }
+        hour = isPM() ? hour + 12 : hour;
         return hour;
+    }
+
+    private boolean isPM() {
+        return "PM".equals(minuteView.getText().toString());
     }
 
     private String getMinutes() {
         String[] s = hourView.getText().toString().split(":");
         return s[1];
+    }
+
+    private void storeTime(int hourOfDay, int minute) {
+        SharedPreferences sharedPref = getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(Constants.SAVED_HOUR, hourOfDay);
+        editor.putInt(Constants.SAVED_MINUTES, minute);
+        editor.commit();
     }
 }
