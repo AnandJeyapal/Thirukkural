@@ -10,10 +10,31 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    // Encapsulates signing configurations.
+    signingConfigs {
+        // Creates a signing configuration called "release".
+        release {
+            storeFile file("release_key.jks")
+            storePassword "123456"
+            keyAlias "kural"
+            keyPassword "123456"
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = "Thirukkural"
+            def date = new Date();
+            def formattedDate = date.format('ddMMyy_HHmm')
+            def newApkName = project + "_" + versionName + "_" + formattedDate + ".apk"
+            outputFileName = new File(newApkName)
         }
     }
 }
